@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="col-md-8 offset-md-2">
+    <h1>ShotByYov</h1>
+    <hr>
+    {% for post in posts %}
+    <h2><a href="{% url 'blog_detail' post.pk%}">{{ post.title }}</a></h2>
+    <p><img src="{{ post.image.url}}" width="300"></p>
+    <small>
+        {{ post.author }} | {{ post.created_on.date }} |
+        Categories:&nbsp;
+        {% for category in post.categories.all %}
+        <a href="{% url 'blog_category' category.name %}">
+            {{ category.name }}
+        </a>&nbsp;
+        <p class="card-text">{{post.body|slice:":200" }}</p>
+        {% endfor %}
+    </small>
+    <p>{{ post.body | slice:":50" }}...</p>
+    {% endfor %}
+</div>
+{% endblock %}
